@@ -1,0 +1,13 @@
+[Unit]
+Description=Save email messages to Obsidian when triggered
+After=network.target                                
+
+[Service]
+ExecStart=/home/your_user_name/anaconda3/bin/python3 -u /home/your_user_name/ObsidianImportEmail/ImportEML.py 
+Restart=always                                      
+StandardOutput=journal                              
+StandardError=journal                               
+User=your_user_name
+
+[Install]
+WantedBy=multi-user.target                
