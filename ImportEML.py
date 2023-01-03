@@ -1,5 +1,6 @@
 import optparse
 import os
+import time
 import re
 import json
 import email, email.policy
@@ -7,6 +8,8 @@ from email.header import decode_header, make_header
 from markdownify import markdownify as md
 import unicodedata
 import pathlib
+from watchdog.observers import Observer
+from watchdog.events import PatternMatchingEventHandler
 
 def parse_options():
     # Parse options
@@ -15,8 +18,6 @@ def parse_options():
     """
     
     parser = optparse.OptionParser(usage=usage)
-    parser.add_option("-f", "--file", dest="file", 
-                        default="", help="File to process")
 
     default_config = os.path.join(os.path.dirname(__file__), 'Settings.json')
     parser.add_option("-c", "--config", dest="configuration_file", 
@@ -33,11 +34,15 @@ def read_configuration_file(file):
     vault_dir = config['Obsidian']['VaultDir']
     markdown_dir = config['Obsidian']['MarkdownDir']
     attachment_dir = config['Obsidian']['AttachmentDir']
+    watch_dir = config['WatchDir']
 
-    return (vault_dir, markdown_dir, attachment_dir)
+    return (vault_dir, markdown_dir, attachment_dir, watch_dir)
 
 def process_a_file(file, vault_dir, markdown_dir, attachment_dir):
     
+    while not os.path.exists(file):
+        time.sleep(0.1)
+
     # Check if the file extension is eml or not
     (stem, ext) = os.path.splitext(file)
     if ext != ".eml":
@@ -145,8 +150,27 @@ def change_filename(path):
 
 if __name__ == '__main__':
     options = parse_options()
-    file = options.file
-    (vault_dir, markdown_dir, attachment_dir) = read_configuration_file(options.configuration_file)
+    (vault_dir, markdown_dir, attachment_dir, watch_dir) = read_configuration_file(options.configuration_file)
 
-    process_a_file(file, vault_dir, markdown_dir, attachment_dir)
+    def on_created(event):
+        process_a_file(event.src_path, vault_dir, markdown_dir, attachment_dir)
+
+
+    event_handler = PatternMatchingEventHandler(['*.eml'])
+    event_handler.on_created = on_created
+
+    observer = Observer()
+    observer.schedule(event_handler, watch_dir, recursive=False)
+    observer.start()
+
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        observer.stop()
+    observer.join()
+
+
+
+    
 
