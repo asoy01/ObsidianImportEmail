@@ -6,14 +6,14 @@ This is a script to easily import email messages into an Obsidian vault. The bas
 1. This EML file is automatically converted into an MD file created in an Obsidian vault.
 1. Attachment files will also be put in the Obsidian vault. Links to the attachments are automatically included in the MD file.
 
-This way, you can import an email message into Obsidian just by saving it into an EML file. Vast majority of email softwares and web services, such as Thunderbird, Gmail and Outlook, can save messages in the EML format.
+This way, you can import an email message into Obsidian just by saving it into an EML file. Vast majority of email softwares and web services, such as Thunderbird, Gmail and Outlook, can save messages in the EML format. Therefore, this method should work robustly.
 
 ## Supported platforms
-I developed and tested the scripts using Windows. The explanations in this README assumes you are using Windows. However, the Python script should also work on Linux and Mac (I have not tested it though).
+I developed and tested the script using Windows. The explanations in this README assumes you are using Windows. However, the Python script should also work on Linux and Mac (I have not tested it though).
 
 ## Prerequisite 
 - Python: 3.9 or above
-    - Older version may work, but I haven't tested.
+    - Older version may work, but I haven't tested it.
 - watchdog package
     - Install with `pip install watchdog`
 - markdownify package
@@ -58,7 +58,7 @@ This way, `ImportEML.py` will be started every time you login to the system.
 You can also stop the script from the Task Scheduler.
 
 ### Starting the script as a systemd service on Linux.
-I created a service file for systemd to start the script when the system is booted. However, I have never tested it myself. You can try it at your own risk.
+I created a service file, `save-email-to-obsidian.service`, for systemd to start the script when the system is booted. However, I have never tested it myself. You can try it at your own risk.
 
-### What about Mac
-Since I do not have any Mac, I cannot say anything.
+### What about Mac?
+Since I do not have any Mac, I cannot say anything about it.
