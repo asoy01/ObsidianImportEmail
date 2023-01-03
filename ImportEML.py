@@ -31,9 +31,9 @@ def read_configuration_file(file):
     with open(file, mode='r') as f:
         config = json.load(f)
 
-    vault_dir = config['Obsidian']['VaultDir']
-    markdown_dir = config['Obsidian']['MarkdownDir']
-    attachment_dir = config['Obsidian']['AttachmentDir']
+    vault_dir = config['VaultDir']
+    markdown_dir = config['MarkdownDir']
+    attachment_dir = config['AttachmentDir']
     watch_dir = config['WatchDir']
 
     return (vault_dir, markdown_dir, attachment_dir, watch_dir)
