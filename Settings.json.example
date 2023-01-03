@@ -1,0 +1,25 @@
+{
+    "Obsidian":{
+        
+        "//":"Full path of the directory for the Vault",
+        "VaultDir":"C:\\Users\\UserName\\Obsidian\\Main",
+        
+        "//":"Directory name under the vault directory to store .md files",
+        "MarkdownDir":"_email",
+
+        "//":"Directory name under the vault directory for storing attachments",
+        "AttachmentDir":"_resources"
+        },
+
+    "Python":{
+
+        "//":"Full path to the python command (executable)",
+        "Command": "C:\\Users\\UserName\\anaconda3\\python.exe",
+
+        "//":"Full path to the ImportEML.py script",
+        "Script": "C:\\Users\\UserName\\ObsidianImportEmail\\ImportEML.py"
+        },
+
+    "//":"Directory to watch for new EML files",    
+    "WatchDir":"C:\\Users\\UserName\\Obsidian\\Email"
+}
