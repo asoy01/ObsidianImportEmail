@@ -13,6 +13,7 @@ I developed and tested the scripts using Windows. The explanations in this READM
 
 ## Prerequisite 
 - Python: 3.9 or above
+    - Older version may work, but I haven't tested.
 - watchdog package
     - Install with `pip install watchdog`
 - markdownify package
@@ -33,3 +34,31 @@ Attachment files are stored in a dedicated directory, such as `/Path/To/Vault/At
 In `Settings.json`, `VaultDir` specifies the full path to your Vault's root directory. `MarkdownDir` is the subdirectory name for `.md` files. This can be empty if you keep the MD files in the root of the Vault, which is what I actually do. `AttachmentDir` specifies the subdirectory name for keeping attachment files. This can also be empty.
 
 `WatchDir` specifies the full path of a directory, where new EML files will be saved. The Python script monitors changes to this directory. If a file with the extension `.eml` is created, the file will be processed to be imported into the Vault.
+
+## Running the script
+You can run the script from the command line like:
+```
+python .\ImportEML.py
+```
+However, this will keep a terminal window opened as long as the script is running. It can be very annoying.
+
+### Starting the script at the login on Windows
+If you want to start the script without opening a terminal window, you can try the following.
+
+1. Open the Task Scheduler
+1. Create a task
+1. In the Triggers tab, make it start at a login
+1. In the Actions tab, create an action to start a program.
+    - Program name should be a full path to `pythonw.exe`
+        - For example, `C:\Users\UserName\anaconda3\pythonw.exe`
+    - Do not use `python.exe`, because it will invoke a terminal window.
+    - In the "Add arguments" field, put the full path to `ImportEML.py`.
+
+This way, `ImportEML.py` will be started every time you login to the system.
+You can also stop the script from the Task Scheduler.
+
+### Starting the script as a systemd service on Linux.
+I created a service file for systemd to start the script when the system is booted. However, I have never tested it myself. You can try it at your own risk.
+
+### What about Mac
+Since I do not have any Mac, I cannot say anything.
