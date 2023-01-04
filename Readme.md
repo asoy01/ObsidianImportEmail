@@ -40,7 +40,15 @@ You can run the script from the command line like:
 ```
 python .\ImportEML.py
 ```
-However, this will keep a terminal window opened as long as the script is running. It can be very annoying.
+This python script takes a commandline option `-c` or `--config`.
+With this option, you can specify the location of the configuration file such as,
+```
+python .\ImportEML.py -c C:\Users\UserName\Obsidian\Settings.json
+```
+When this option is omitted, the script tries to read `Settings.json` in the same directory as the script file.
+
+While invoking the script from commandline works fine, this will keep a terminal window opened as long as the script is running. If it is annoying for you, you can try the tricks below.
+
 
 ### Starting the script at the login on Windows
 If you want to start the script without opening a terminal window, you can try the following.
