@@ -11,6 +11,30 @@ import pathlib
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
 
+# >>>
+
+import logging
+
+# Create a logger
+logger = logging.getLogger(__name__)
+c_handler = logging.StreamHandler()
+f_handler = logging.FileHandler('logfile.log')
+
+# Set level of logging. Change INFO to DEBUG for development stage.
+c_handler.setLevel(logging.INFO)
+f_handler.setLevel(logging.INFO)
+
+# Create formatters and add it to handlers
+c_format = logging.Formatter('%(name)s - %(levelname)s - %(message)s')
+f_format = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
+c_handler.setFormatter(c_format)
+f_handler.setFormatter(f_format)
+
+# Add handlers to the logger
+logger.addHandler(c_handler)
+logger.addHandler(f_handler)
+
+# <<<
 def parse_options():
     # Parse options
     usage = """usage: %prog [options]
@@ -57,20 +81,25 @@ def process_a_file(file, vault_dir, markdown_dir, attachment_dir):
         msg = email.message_from_binary_file(f, policy=email.policy.default)
 
     # Get Headers
-    subject = str(make_header(decode_header(msg["Subject"])))
-    from_addr = str(make_header(decode_header(msg["From"])))
-    to_addr = str(make_header(decode_header(msg["To"])))
 
-    if msg["Cc"] is None:
-        cc_addr = ''
-    else:
-        cc_addr = str(make_header(decode_header(msg["Cc"])))
+    # Initialize headers to 'Unknown' by default
+    subject, from_addr, to_addr, cc_addr = ('Unknown', ) * 4 
+
+    try:
+        # Attempt to decode headers. If successful, these would override the default 'Unknown'
+        subject = str(make_header(decode_header(msg["Subject"])))
+        from_addr = str(make_header(decode_header(msg["From"])))
+        to_addr = str(make_header(decode_header(msg["To"])))
+        cc_addr = str(make_header(decode_header(msg["Cc"]))) if msg["Cc"] else ''
+    except TypeError:
+        logger.debug(f'Error occurred while decoding headers. Message subject: {subject}, from: {from_addr}')  
+        to_addr = "Unspecified"  # Consider what you want to do when 'To' field can't be decoded
 
     msg_id = msg_id_regex.search(msg['Message-ID']).groups()[0]   
     date = slugify(str(make_header(decode_header(msg["Date"]))))
 
     # Initialize the MD file body
-    md_body = '#Email\n\n---\n\n# Message\n\n## Header\n\nSubject: {}\nFrom: {}\nTo: {}\nCC: {}\nDate: {}\n\n---\n## Body\n\n'.format(subject, from_addr, to_addr, cc_addr, date)
+    md_body = '---\ntags: [email]\ntopic: \nproject: \n---\n\n# Message\n\n## Header\n\nSubject: {}\nFrom: {}\nTo: {}\nCC: {}\nMessage ID: {}\nDate: {}\n\n---\n## Body\n\n'.format(subject, from_addr, to_addr, cc_addr, msg_id, date)
 
     # Process a body text
     body = msg.get_body(preferencelist=('plain', 'html'))
