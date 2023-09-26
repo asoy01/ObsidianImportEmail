@@ -1,14 +1,14 @@
 {
         
     "//":"Full path of the directory for the Vault",
-    "VaultDir":"C:\\Users\\UserName\\Obsidian\\Main",
+    "VaultDir":"/Users/rich/Library/Mobile Documents/iCloud~md~obsidian/Documents/@PLAINTEXT",
     
     "//":"Directory name under the vault directory to store .md files",
-    "MarkdownDir":"_email",
+    "MarkdownDir":"NOTEBOOKS/_Email",
 
     "//":"Directory name under the vault directory for storing attachments",
-    "AttachmentDir":"_resources",
+    "AttachmentDir":"NOTEBOOKS/_Assets",
 
     "//":"Directory to watch for new EML files",    
-    "WatchDir":"C:\\Users\\UserName\\Obsidian\\Email"
+    "WatchDir":"/Users/rich/Desktop/PLAINTEXT-Notebooks"
 }

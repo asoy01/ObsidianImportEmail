@@ -42,6 +42,7 @@ python .\ImportEML.py
 ```
 This python script takes a commandline option `-c` or `--config`.
 With this option, you can specify the location of the configuration file such as,
+
 ```
 python .\ImportEML.py -c C:\Users\UserName\Obsidian\Settings.json
 ```
@@ -70,3 +71,32 @@ I created a service file, `save-email-to-obsidian.service`, for systemd to start
 
 ### What about Mac?
 Since I do not have any Mac, I cannot say anything about it.
+
+## 2023-09-26 RHM:
+
+Test:
+
+The server, running without modification to the code, in a (conda) virtual environment appears to work as advertised.
+
+When in the MacOS, you can run the script from the command line like:
+
+```
+python ImportEML.py
+```
+
+This python script takes a commandline option `-c` or `--config`.
+
+Without the command line argument `--nohup`, the server will stop when you close the terminal window in which the script is running. Thus, –nohup allows running the server headlessly.
+
+Just remember to disable `--nohup` when you’re troubleshooting or debugging. 🛠️
+
+*Note: It is unclear as to whether the script is designed to allow enabling `nohup` by a durable variable i.e. in `.env.` As best practice, it should be toggled via command line argument on each run.*
+
+### Possible: Automatic Server Restart on MacOS. 🍎
+
+Want the server to start every time you log into your Mac? 
+
+If the python program is invoked with a shell script (start.sh), this might work:
+
+- Open “System Preferences” ➡️ “Login Items.”
+- Click ‘+’ ➡️ add `start.sh`.
