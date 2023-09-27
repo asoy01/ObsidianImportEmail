@@ -86,7 +86,12 @@ python ImportEML.py
 
 This python script takes a commandline option `-c` or `--config`.
 
-Without the command line argument `--nohup`, the server will stop when you close the terminal window in which the script is running. Thus, –nohup allows running the server headlessly.
+To run a Python script in the background and have it continue running even after the terminal window is closed, you would use the exact same commands:
+
+```
+nohup python ImportEML.py &
+```
+The `&` runs the process in the background and `nohup` prevents the process from being terminated when the terminal window is closed.
 
 Just remember to disable `--nohup` when you’re troubleshooting or debugging. 🛠️
 
