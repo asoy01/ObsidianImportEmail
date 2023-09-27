@@ -1,14 +1,14 @@
 {
         
     "//":"Full path of the directory for the Vault",
-    "VaultDir":"/Users/rich/Dropbox (Personal)/Obsidian/TEST VAULT",
+    "VaultDir":"C:\\Users\\UserName\\Obsidian\\Main",
     
     "//":"Directory name under the vault directory to store .md files",
-    "MarkdownDir":"04 NOTEBOOKS/_Email",
+    "MarkdownDir":"_email",
 
     "//":"Directory name under the vault directory for storing attachments",
-    "AttachmentDir":"04 NOTEBOOKS/_Assets",
+    "AttachmentDir":"_resources",
 
     "//":"Directory to watch for new EML files",    
-    "WatchDir":"/Users/rich/Dropbox (Personal)/Obsidian/TEST VAULT/06 BINS/EML"
+    "WatchDir":"C:\\Users\\UserName\\Obsidian\\Email"
 }
