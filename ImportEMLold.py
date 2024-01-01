@@ -10,8 +10,6 @@ import unicodedata
 import pathlib
 from watchdog.observers import Observer
 from watchdog.events import PatternMatchingEventHandler
-# >>>
-import datetime  # Import datetime module
 
 # >>>
 
@@ -87,14 +85,6 @@ def process_a_file(file, vault_dir, markdown_dir, attachment_dir):
     # Initialize headers to 'Unknown' by default
     subject, from_addr, to_addr, cc_addr = ('Unknown', ) * 4 
 
-# Try to extract and format the send date
-    try:
-        send_date = email.utils.parsedate_to_datetime(msg["Date"])
-        formatted_date = send_date.strftime('%Y-%m-%d %H-%M')  # Format date as 'YYYY-MM-DD HH-MM'
-    except Exception as e:
-        logger.debug(f'Error occurred while parsing date. Using current date/time. Error: {e}')
-        formatted_date = datetime.datetime.now().strftime('%Y-%m-%d %H-%M')
-        
     try:
         # Attempt to decode headers. If successful, these would override the default 'Unknown'
         subject = str(make_header(decode_header(msg["Subject"])))
@@ -129,7 +119,7 @@ def process_a_file(file, vault_dir, markdown_dir, attachment_dir):
     md_body = remove_excessive_newlines.sub("\n\n", md_body)
 
     # MD file path
-    md_file_path = os.path.join(vault_dir, markdown_dir, formatted_date + '-' + slugify(subject) + '.md')
+    md_file_path = os.path.join(vault_dir, markdown_dir, slugify(subject) + '-' + msg_id + '.md')
     while os.path.exists(md_file_path):
         md_file_path = change_filename(md_file_path)
 
