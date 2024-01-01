@@ -129,7 +129,7 @@ def process_a_file(file, vault_dir, markdown_dir, attachment_dir):
     md_body = remove_excessive_newlines.sub("\n\n", md_body)
 
     # MD file path
-    md_file_path = os.path.join(vault_dir, markdown_dir, formatted_date + '-' + slugify(subject) + '.md')
+    md_file_path = os.path.join(vault_dir, markdown_dir, formatted_date + ' ' + slugify(subject) + '.md')
     while os.path.exists(md_file_path):
         md_file_path = change_filename(md_file_path)
 
